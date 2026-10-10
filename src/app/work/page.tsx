@@ -21,6 +21,7 @@ import {
   ShieldCheck,
   CheckCircle2,
 } from 'lucide-react';
+import { PromptLauncher } from '@/components/common/PromptLauncher';
 
 export default function CareerMirrorPage() {
   const router = useRouter();
@@ -586,6 +587,44 @@ export default function CareerMirrorPage() {
               </p>
             </div>
           </div>
+
+          {/* Deep-dive Prompt Launcher for LLMs */}
+          <PromptLauncher
+            title="さらに深掘りする（AIキャリアコーチング）"
+            subtitle="このプロンプトを外部AIに送ると、5年間のスキル習得ツリーと模擬面接が始まります。"
+            targetType="career"
+            prompt={`あなたは世界最高峰のキャリアアーキテクト（2030年型キャリア戦略の第一人者）です。
+以下の私の診断データに基づいて、深層キャリアコーチングを実施してください。
+
+【私のプロフィール & 診断結果】
+- 属性: ${mode}
+- 2030年の共創肩書: ${blueprint.futureTitle} (${blueprint.futureTitleEn})
+- キャッチコピー: ${blueprint.catchphrase}
+- 人間コア vs AI協調比率: 人間 ${blueprint.synergyRatio.humanPercent}% / AI ${blueprint.synergyRatio.aiPercent}%
+- AIに委ねる役割: ${blueprint.coCreationMatrix.aiRole.join(', ')}
+- 人間として担う核: ${blueprint.coCreationMatrix.humanCore.join(', ')}
+- 私のマニフェスト: "${blueprint.blueRoseStatement}"
+
+【あなたへの依頼事項】
+以下の3つのセクションに分けて、極めて具体的かつ刺激的なキャリア戦略を出力してください。
+1. 【5年間のスキルツリー習得計画】
+   この肩書を2030年に現実化するために、今年から1年ごとに身につけるべき技術・知見・人間的経験のロードマップ。
+2. 【2030年の仮想クライアント案件シミュレーション】
+   2030年にあなた（私）に舞い込む、最も象徴的なプロジェクトの架空依頼書と、AIと協調しながらそれをどう解決するかの実況描写。
+3. 【模擬インタビュー（ロールプレイ質問）】
+   私がこの未来の肩書を背負う覚悟を問う、鋭く本質的な質問を1つ投げかけてください（私が回答したら対話を続けてください）。`}
+            anatomy={{
+              role: '2030年のエグゼクティブ・キャリアアーキテクト（専門家ペルソナ）',
+              objective: '診断結果を基軸とした5年間スキルツリー・具体的案件・対話型面接の生成',
+              constraints: '抽象論を排除し、現実の産業・学術動向に即したリアリスティックな計画',
+              outputFormat: '3部構成（スキルツリー、架空案件シナリオ、対話型質問）',
+            }}
+            userPreferences={{
+              mode,
+              futureTitle: blueprint.futureTitle,
+              synergyRatio: blueprint.synergyRatio,
+            }}
+          />
 
           {/* Navigation buttons */}
           <div className="flex gap-2 pt-1">

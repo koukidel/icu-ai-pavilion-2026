@@ -53,6 +53,7 @@ export interface SelfResult {
   avatarId: string;
   avatarStyle: 'pixar_boy' | 'pixar_girl' | 'cyber_explorer' | 'nature_scholar' | 'mystic_artisan';
   avatarSvg?: string;
+  avatarImageUrl?: string; // 生成画像またはアップロード画像URL
   worldTheme: WorldTheme;
   userMood: string;
   concernText: string;

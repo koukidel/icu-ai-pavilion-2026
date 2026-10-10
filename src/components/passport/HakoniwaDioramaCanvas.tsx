@@ -256,17 +256,31 @@ export const HakoniwaDioramaCanvas: React.FC<Props> = ({ passport }) => {
     ctx.fillText('【SELF】未来への宣言（Blue Rose Statement）', 44, 718);
 
     ctx.fillStyle = '#27566c';
-    ctx.font = 'italic bold 13px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
+    ctx.font = 'italic bold 12px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
     const stmt =
       self?.blueRoseStatement ||
       '不可能な青を、私自身の純粋な探究でこのキャンパスに咲かせる。';
-    // Wrap text if needed
     if (stmt.length > 22) {
-      ctx.fillText(`「${stmt.slice(0, 22)}`, 44, 762);
-      ctx.fillText(`${stmt.slice(22)}」`, 54, 782);
+      ctx.fillText(`「${stmt.slice(0, 22)}`, 44, 742);
+      ctx.fillText(`${stmt.slice(22)}」`, 54, 760);
     } else {
-      ctx.fillText(`「${stmt}」`, 44, 762);
+      ctx.fillText(`「${stmt}」`, 44, 742);
     }
+
+    // Field 4: 【CARE】共創パートナー
+    ctx.fillStyle = '#27566c';
+    ctx.font = 'bold 11px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
+    ctx.fillText('【CARE】共創パートナー', 44, 796);
+
+    ctx.fillStyle = '#059669';
+    ctx.font = 'bold 13px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
+    ctx.fillText(
+      care
+        ? `LOVOT（らぼっと）『${care.lovot.name}』- ${care.interactionLabel}`
+        : 'LOVOT写真工房（未体験）',
+      44,
+      820
+    );
 
     // Hashtags & Footer inside card
     ctx.font = '10px -apple-system, sans-serif';

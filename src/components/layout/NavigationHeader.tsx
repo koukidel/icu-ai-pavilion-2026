@@ -27,6 +27,7 @@ export const NavigationHeader: React.FC = () => {
     if (pathname.startsWith('/work')) return { title: 'WORK スタジオ', badge: '01', zone: 'work' };
     if (pathname.startsWith('/make')) return { title: 'MAKE スタジオ', badge: '02', zone: 'make' };
     if (pathname.startsWith('/self')) return { title: 'SELF スタジオ', badge: '03', zone: 'self' };
+    if (pathname.startsWith('/care')) return { title: 'CARE スタジオ', badge: '04', zone: 'care' };
     if (pathname.startsWith('/passport')) return { title: '箱庭パスポート', badge: 'FINAL', zone: null };
     return null;
   };

@@ -21,7 +21,7 @@ interface SessionContextType {
   passport: PassportData | null;
   setPassport: (data: PassportData) => void;
   completedZonesCount: number;
-  isZoneCompleted: (zone: 'work' | 'make' | 'self') => boolean;
+  isZoneCompleted: (zone: 'work' | 'make' | 'self' | 'care') => boolean;
   resetSession: () => void;
   publishGameToClassroom: (game: GameConfig) => void;
   publishPassportToClassroom: (pass: PassportData) => void;
@@ -97,7 +97,7 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({
     publishPassportToClassroom(data);
   };
 
-  const isZoneCompleted = (zone: 'work' | 'make' | 'self'): boolean => {
+  const isZoneCompleted = (zone: 'work' | 'make' | 'self' | 'care'): boolean => {
     switch (zone) {
       case 'work':
         return !!work;
@@ -105,12 +105,14 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({
         return !!make;
       case 'self':
         return !!self;
+      case 'care':
+        return !!care;
       default:
         return false;
     }
   };
 
-  const completedZonesCount = ['work', 'make', 'self'].filter((z) =>
+  const completedZonesCount = ['work', 'make', 'self', 'care'].filter((z) =>
     isZoneCompleted(z as any)
   ).length;
 

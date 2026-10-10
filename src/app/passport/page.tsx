@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePavilionSession } from '@/context/SessionContext';
 import { PassportData } from '@/types/pavilion';
 import { HakoniwaDioramaCanvas } from '@/components/passport/HakoniwaDioramaCanvas';
+import { FeedbackModal } from '@/components/common/FeedbackModal';
+import { GeminiStudentBanner } from '@/components/common/GeminiStudentBanner';
 import confetti from 'canvas-confetti';
 import {
   Sparkles,
@@ -12,6 +14,7 @@ import {
   Tv2,
   CheckCircle2,
   Share2,
+  MessageSquare,
 } from 'lucide-react';
 
 export default function PassportPage() {
@@ -26,6 +29,7 @@ export default function PassportPage() {
   } = usePavilionSession();
 
   const [activePassport, setActivePassport] = useState<PassportData | null>(null);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
   useEffect(() => {
     const newPass: PassportData = {
@@ -42,7 +46,7 @@ export default function PassportPage() {
   }, [work, make, self, care]);
 
   return (
-    <main className="flex-1 flex flex-col p-4 space-y-4 pb-12 select-none">
+    <main className="flex-1 flex flex-col p-4 space-y-4 pb-16 select-none text-ink">
       {/* Title */}
       <div className="text-center space-y-1">
         <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-rose-light text-rose-dark text-[11px] font-bold border border-rose/30">
@@ -53,24 +57,24 @@ export default function PassportPage() {
           AI共創パスポート <span className="text-rose">「箱庭」</span>
         </h1>
         <p className="text-[11px] text-ink/70">
-          全ゾーンの体験が集結した世界にひとつだけのデジタルパスポート
+          全4ゾーンの体験が集結した世界にひとつだけのデジタルパスポート
         </p>
       </div>
 
       {/* Progress pill */}
-      <div className="p-3 rounded-2xl bg-white border border-black/[0.06] shadow-xs flex items-center justify-between">
+      <div className="p-3.5 rounded-2xl bg-white border border-black/[0.06] shadow-xs flex items-center justify-between">
         <div className="text-xs">
           <span className="font-bold text-teal-dark">
-            進捗: {completedZonesCount} / 3 ゾーン完了
+            進捗: {completedZonesCount} / 4 ゾーン完了
           </span>
           <div className="text-[10px] text-ink/60">
-            {completedZonesCount === 3
-              ? '完全版パスポートです！'
-              : '他のゾーンをめぐるとアイテムが追加されます'}
+            {completedZonesCount === 4
+              ? '完全版パスポートが完成しました！'
+              : '他のゾーンをめぐるとカードにデータが追加されます'}
           </div>
         </div>
 
-        {completedZonesCount < 3 && (
+        {completedZonesCount < 4 && (
           <div className="flex gap-1">
             {!work && (
               <Link
@@ -96,12 +100,40 @@ export default function PassportPage() {
                 +SELF
               </Link>
             )}
+            {!care && (
+              <Link
+                href="/care"
+                className="px-2 py-0.5 rounded-lg text-[10px] bg-paper border border-emerald-500/30 text-emerald-800 font-bold"
+              >
+                +CARE
+              </Link>
+            )}
           </div>
         )}
       </div>
 
       {/* Passport 9:16 Canvas */}
       {activePassport && <HakoniwaDioramaCanvas passport={activePassport} />}
+
+      {/* Feedback Survey Button */}
+      <div className="p-3.5 rounded-2xl bg-white border border-black/[0.06] flex items-center justify-between shadow-xs">
+        <div className="flex items-center gap-2">
+          <MessageSquare className="w-4 h-4 text-teal" />
+          <div>
+            <div className="text-xs font-bold text-ink">パビリオンのアンケート</div>
+            <div className="text-[10px] text-ink/60">1分で完了します。ぜひ感想をお聞かせください</div>
+          </div>
+        </div>
+        <button
+          onClick={() => setIsFeedbackOpen(true)}
+          className="px-3 py-1.5 rounded-xl bg-teal text-white text-xs font-bold hover:bg-teal-dark transition-colors shrink-0 shadow-2xs"
+        >
+          回答する
+        </button>
+      </div>
+
+      {/* Gemini Student Benefit Banner */}
+      <GeminiStudentBanner />
 
       {/* Blackboard Live notification */}
       <div className="p-3.5 rounded-2xl bg-chalk-bg text-chalk-white border border-teal/40 space-y-1.5 shadow-chalkglow">
@@ -126,6 +158,12 @@ export default function PassportPage() {
           <ArrowRight className="w-3 h-3" />
         </Link>
       </div>
+
+      {/* Feedback Modal */}
+      <FeedbackModal
+        isOpen={isFeedbackOpen}
+        onClose={() => setIsFeedbackOpen(false)}
+      />
     </main>
   );
 }

@@ -26,6 +26,7 @@ export const BottomNavBar: React.FC = () => {
     { href: '/work', label: 'WORK', icon: Briefcase, completed: isZoneCompleted('work') },
     { href: '/make', label: 'MAKE', icon: Gamepad2, completed: isZoneCompleted('make') },
     { href: '/self', label: 'SELF', icon: User, completed: isZoneCompleted('self') },
+    { href: '/care', label: 'CARE', icon: Heart, completed: isZoneCompleted('care') },
     { href: '/passport', label: '箱庭', icon: Sparkles },
   ];
 
