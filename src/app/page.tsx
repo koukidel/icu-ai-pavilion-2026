@@ -31,13 +31,13 @@ export default function MobileHubPage() {
       id: 'work',
       number: '01',
       title: 'WORK',
-      subtitle: '思考とキャリア鏡像',
-      catchphrase: '2030年の共創肩書 ＆ 深層コーチング',
-      description: '日々のタスクを分解し、外部AIで深掘りできるキャリアプロンプトを導出します。',
+      subtitle: '将来の仕事さがし',
+      catchphrase: 'AIと一緒に働く未来を考える',
+      description: '好きなことや苦手なことを整理して、2030年のあなたにぴったりな働き方を見つけます。',
       href: '/work',
       icon: Briefcase,
       color: 'teal',
-      badge: 'Blue Career Mirror',
+      badge: 'キャリア診断',
       iconBg: 'bg-teal-light text-teal-dark',
       completed: isZoneCompleted('work'),
       resultBadge: work?.futureTitle,
@@ -46,13 +46,13 @@ export default function MobileHubPage() {
       id: 'make',
       number: '02',
       title: 'MAKE',
-      subtitle: '言葉と絵のゲーム工房',
-      catchphrase: 'Claude / ChatGPTで動くWebゲーム制作',
-      description: 'アイデアからゲーム仕様を選定。Claude Artifacts等で即動くコードを生成します。',
+      subtitle: 'ゲームづくり',
+      catchphrase: 'AIで自分だけのゲームをつくる',
+      description: 'ルールやキャラクターを選ぶだけで、ブラウザですぐに遊べるゲームの指示文が作れます。',
       href: '/make',
       icon: Gamepad2,
       color: 'rose',
-      badge: 'Prompt-to-Play',
+      badge: 'ゲーム制作',
       iconBg: 'bg-rose-light text-rose-dark',
       completed: isZoneCompleted('make'),
       resultBadge: make?.title,
@@ -61,13 +61,13 @@ export default function MobileHubPage() {
       id: 'self',
       number: '03',
       title: 'SELF',
-      subtitle: '3Dアバター工房',
-      catchphrase: 'ピクサー調・サイバー等の立体分身',
-      description: '自撮り写真と選んだスタイルから、高品質な3Dアバター生成プロンプトを作成します。',
+      subtitle: '3Dアバターづくり',
+      catchphrase: 'かわいい立体キャラクターをつくる',
+      description: 'ピクサー風やドット絵など、好きなスタイルであなただけのアバター画像を作ります。',
       href: '/self',
       icon: User,
       color: 'violet',
-      badge: 'Alter Ego',
+      badge: 'アバター',
       iconBg: 'bg-violet-light text-violet',
       completed: isZoneCompleted('self'),
       resultBadge: self ? 'アバター完成' : undefined,
@@ -76,13 +76,13 @@ export default function MobileHubPage() {
       id: 'care',
       number: '04',
       title: 'CARE',
-      subtitle: 'LOVOT写真工房',
-      catchphrase: '展示ロボット × あなたの世界観',
-      description: 'ブースのLOVOTを撮影し、Instagram等で映えるエモーショナルな写真を生成します。',
+      subtitle: 'LOVOTと写真撮影',
+      catchphrase: '展示ロボットと記念撮影',
+      description: 'ブースのロボット（LOVOT）の写真を撮って、SNSに載せたくなる可愛い画像を作ります。',
       href: '/care',
       icon: Heart,
       color: 'emerald',
-      badge: 'LOVOT Studio',
+      badge: 'ロボット写真',
       iconBg: 'bg-emerald-50 text-emerald-800',
       completed: isZoneCompleted('care'),
       resultBadge: care ? '撮影完了' : undefined,
@@ -96,7 +96,7 @@ export default function MobileHubPage() {
         <div className="flex items-center justify-between">
           <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-paper text-teal-dark text-[11px] font-bold border border-teal/20">
             <span className="w-1.5 h-1.5 rounded-full bg-rose animate-ping" />
-            パビリオン受付完了
+            パビリオンへようこそ
           </span>
           <span className="text-[10px] font-mono text-ink/50 uppercase">ICU FES 2026</span>
         </div>
@@ -107,17 +107,17 @@ export default function MobileHubPage() {
         </h1>
 
         <p className="text-xs text-ink/75 leading-relaxed">
-          パビリオンで嗜好を選ぶと、専門的に調律された<strong>プロンプト</strong>が生成されます。ChatGPTやGeminiに送って、あなたのスマートフォン上で本物の生成AIのパワーを解き放ちましょう。
+          好きなコーナーを選んで質問に答えると、AIへの上手な指示文（プロンプト）が作れます。普段使っているChatGPTやGeminiに送って、自分だけのゲームや3Dアバター作りを体験してみましょう。
         </p>
       </section>
 
-      {/* Zone Selection Cards (The 4 Distinct Choices) */}
+      {/* Zone Selection Cards */}
       <section className="space-y-2.5">
         <div className="flex items-center justify-between px-1">
           <span className="text-xs font-bold text-teal-dark tracking-wider uppercase font-sans">
-            体験ゾーンを選択
+            体験コーナーを選ぶ
           </span>
-          <span className="text-[11px] text-ink/60">自由巡回（全4ゾーン）</span>
+          <span className="text-[11px] text-ink/60">どこからでも体験できます（全4コーナー）</span>
         </div>
 
         <div className="space-y-2.5">
@@ -179,7 +179,7 @@ export default function MobileHubPage() {
 
                 {zone.resultBadge && (
                   <div className="mt-2.5 pt-2 border-t border-black/[0.04] flex items-center justify-between text-[11px]">
-                    <span className="text-ink/60">記録データ:</span>
+                    <span className="text-ink/60">体験結果:</span>
                     <span className="font-bold text-teal-dark truncate max-w-[200px]">
                       {zone.resultBadge}
                     </span>
@@ -202,10 +202,10 @@ export default function MobileHubPage() {
           </div>
           <div>
             <div className="text-xs font-bold text-white">
-              教室の黒板スクリーン投影中
+              教室のスクリーンにも投影中
             </div>
             <div className="text-[10px] text-chalk-white/70">
-              来場者全員の共創データが集う巨大モニター
+              みんなが体験したデータが集まる大きな画面です
             </div>
           </div>
         </div>
@@ -214,7 +214,7 @@ export default function MobileHubPage() {
           target="_blank"
           className="px-3 py-1.5 rounded-xl bg-chalk-teal text-chalk-bg font-bold text-[11px] whitespace-nowrap hover:bg-teal-light transition-colors"
         >
-          黒板を開く
+          スクリーンを開く
         </Link>
       </section>
 
@@ -243,7 +243,7 @@ export default function MobileHubPage() {
           className="text-[11px] text-ink/50 hover:text-rose transition-colors inline-flex items-center gap-1"
         >
           <RotateCcw className="w-3 h-3" />
-          体験データをリセット（プライバシー保護）
+          データを消して最初からやり直す
         </button>
       </footer>
 
@@ -259,21 +259,21 @@ export default function MobileHubPage() {
             </div>
             <div>
               <div className="text-xs font-extrabold text-ink flex items-center gap-1.5">
-                <span>箱庭パスポート</span>
+                <span>体験パスポート</span>
                 <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-rose text-white">
                   {completedZonesCount}/4
                 </span>
               </div>
               <div className="text-[10px] text-ink/60">
                 {completedZonesCount === 4
-                  ? '完全版パスポートが発行可能です！'
-                  : '体験したゾーンが集結します'}
+                  ? 'すべてのコーナーを体験しました！'
+                  : '体験した内容が1枚のカードにまとまります'}
               </div>
             </div>
           </div>
 
           <div className="px-3 py-1.5 rounded-xl bg-rose text-white text-xs font-bold flex items-center gap-1 shadow-sm">
-            <span>開く</span>
+            <span>見る</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </div>
         </Link>

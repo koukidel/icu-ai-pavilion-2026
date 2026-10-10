@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 
+export const runtime = 'nodejs';
+
 const apiKey = process.env.GEMINI_API_KEY || '';
 const ai = new GoogleGenAI(apiKey ? { apiKey } : undefined);
 
@@ -15,26 +17,29 @@ export async function POST(req: NextRequest) {
 
     const systemPrompt = `
 絵文字は一切出力しないでください。
-ユーザーの属性(${mode})、仕分け結果(AI委譲率 ${aiPercent}%, Human率 ${humanPercent}%)、残したタスク、手放したタスクから、
-2030年の共創型キャリアBlueprintと箱庭パラメータをJSONで生成してください。
+「知の越境」「概念翻訳」「思索のハブ」「生身の熱量」「車座」「マニフェスト」といった難解・哲学的・気取った表現は一切禁止です。
+誰にでもスッと頭に入り、ワクワクするような、平易で自然な日常日本語を使ってください。
+
+ユーザーの属性(${mode})、仕分け結果(AIにお願いする割合 ${aiPercent}%, 自分でやる割合 ${humanPercent}%)、自分で残したタスク、AIに任せたタスクから、
+2030年の未来の仕事スタイルをJSONで生成してください。
 
 JSONスキーマ:
 {
-  "futureTitle": "string (例: 概念翻訳アーキテクト)",
-  "futureTitleEn": "string (例: Conceptual Translation Architect)",
-  "catchphrase": "string (一言の要約)",
+  "futureTitle": "string (わかりやすく魅力的な仕事の肩書き・例: アイデアをつなぐ企画パートナー)",
+  "futureTitleEn": "string (例: Creative Project Partner)",
+  "catchphrase": "string (誰にでも伝わる親しみやすい一言説明)",
   "synergyRatio": { "humanPercent": ${humanPercent}, "aiPercent": ${aiPercent} },
-  "executiveSummary": "string (80字程度)",
+  "executiveSummary": "string (平易で読みやすいまとめ・80字程度)",
   "coCreationMatrix": {
     "aiRole": ["string", "string", "string"],
     "humanCore": ["string", "string", "string"]
   },
   "dayInLife2030": [
-    { "time": "09:00", "action": "string" },
-    { "time": "13:00", "action": "string" },
-    { "time": "17:00", "action": "string" }
+    { "time": "09:00", "action": "string (平易な表現)" },
+    { "time": "13:00", "action": "string (平易な表現)" },
+    { "time": "17:00", "action": "string (平易な表現)" }
   ],
-  "blueRoseStatement": "string (夢叶う宣言・50字程度)",
+  "blueRoseStatement": "string (前向きなモットー・50字程度)",
   "hakoniwaParams": {
     "avatarCostume": "string (tech_minimal_jacket / academic_tweed / artisan_apron / casual_knit)",
     "heldItem": "string (hologram_blueprint / illuminated_book / glowing_lantern / magic_pen)",
@@ -45,7 +50,7 @@ JSONスキーマ:
 }
 `;
 
-    const userText = `保持タスク: ${(keptTasks || []).join(', ')}\n委譲タスク: ${(delegatedTasks || []).join(', ')}`;
+    const userText = `自分でやるタスク: ${(keptTasks || []).join(', ')}\nAIに任せるタスク: ${(delegatedTasks || []).join(', ')}`;
 
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -64,39 +69,39 @@ JSONスキーマ:
     }
     return NextResponse.json(result);
   } catch (error) {
-    // 堅牢なフォールバック
+    // 平易で温かみのあるフォールバック
     return NextResponse.json({
-      futureTitle: '概念翻訳アーキテクト',
-      futureTitleEn: 'Conceptual Translation Architect',
-      catchphrase: '論理の海をAIに潜らせ、生身の熱量で知の架け橋を架ける人',
+      futureTitle: 'アイデアをつなぐ企画パートナー',
+      futureTitleEn: 'Creative Project Partner',
+      catchphrase: '調べものや作業はAIにまかせ、人と人をつなぐ対話に力を注ぐ人',
       synergyRatio: { humanPercent: 30, aiPercent: 70 },
       executiveSummary:
-        '作業の大部分をAIに委譲することで、異なる専門領域の間に横たわる哲学的な溝を埋める対話のハブへと進化します。',
+        '面倒な下調べや定型作業をAIにお願いすることで、本当に大切な相談や、新しいアイデアを生み出すことに集中できます。',
       coCreationMatrix: {
         aiRole: [
-          '大量の文献やデータの超高速要約',
-          '多言語ドラフトと論理検証の自動化',
-          '定型スケジュールと資料の整形',
+          '資料やデータのすばやい要約',
+          '文章や外国語のドラフト作成',
+          'スケジュールの整理や定型作業',
         ],
         humanCore: [
-          '解くべき課題の発見と違和感の提示',
-          '美意識と倫理観に基づく最終判断',
-          '現場の温度感に合わせた生身の対話',
+          'みんなが本当に困っていることを見つける',
+          '相手の気持ちに寄り添って話を聞く',
+          '最後の決定と責任を持つ',
         ],
       },
       dayInLife2030: [
-        { time: '09:00', action: '自律AIがまとめた思想接点レポートを確認' },
-        { time: '13:00', action: '仲間との車座による哲学対話' },
-        { time: '17:00', action: '自らの言葉によるマニフェスト執筆' },
+        { time: '09:00', action: 'AIがまとめたニュースや情報メモをチェック' },
+        { time: '13:00', action: 'チームの仲間とお茶を飲みながらアイデア会議' },
+        { time: '17:00', action: '次のプロジェクトに向けた企画書をまとめる' },
       ],
       blueRoseStatement:
-        'かつて不可能だった知の越境を果たし、誰よりも人間的な温度を持った問いを世界に投げかける。',
+        'AIを頼れる相棒にして、自分にしかできない温かい挑戦を続けていく。',
       hakoniwaParams: {
         avatarCostume: 'tech_minimal_jacket',
         heldItem: 'hologram_blueprint',
         pedestalType: 'cyber_glass_grid',
         ambientLighting: 'cyan_blue',
-        hologramTitleText: 'CONCEPT ARCHITECT',
+        hologramTitleText: 'CREATIVE PARTNER',
       },
     });
   }

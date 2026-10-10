@@ -12,8 +12,6 @@ import {
   Sparkles,
   ArrowRight,
   Tv2,
-  CheckCircle2,
-  Share2,
   MessageSquare,
 } from 'lucide-react';
 
@@ -51,13 +49,13 @@ export default function PassportPage() {
       <div className="text-center space-y-1">
         <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-rose-light text-rose-dark text-[11px] font-bold border border-rose/30">
           <Sparkles className="w-3.5 h-3.5 text-rose" />
-          AI Co-existence Passport
+          PASSPORT 2026
         </div>
         <h1 className="text-xl font-extrabold text-ink tracking-tight">
-          AI共創パスポート <span className="text-rose">「箱庭」</span>
+          体験パスポート <span className="text-rose">「箱庭」</span>
         </h1>
         <p className="text-[11px] text-ink/70">
-          全4ゾーンの体験が集結した世界にひとつだけのデジタルパスポート
+          今日体験した内容がまとまった記念カードです
         </p>
       </div>
 
@@ -65,12 +63,12 @@ export default function PassportPage() {
       <div className="p-3.5 rounded-2xl bg-white border border-black/[0.06] shadow-xs flex items-center justify-between">
         <div className="text-xs">
           <span className="font-bold text-teal-dark">
-            進捗: {completedZonesCount} / 4 ゾーン完了
+            体験したコーナー: {completedZonesCount} / 4
           </span>
           <div className="text-[10px] text-ink/60">
             {completedZonesCount === 4
-              ? '完全版パスポートが完成しました！'
-              : '他のゾーンをめぐるとカードにデータが追加されます'}
+              ? 'すべてのコーナーを体験しました！'
+              : '他のコーナーをめぐると、カードにデータが追加されます'}
           </div>
         </div>
 
@@ -121,7 +119,7 @@ export default function PassportPage() {
           <MessageSquare className="w-4 h-4 text-teal" />
           <div>
             <div className="text-xs font-bold text-ink">パビリオンのアンケート</div>
-            <div className="text-[10px] text-ink/60">1分で完了します。ぜひ感想をお聞かせください</div>
+            <div className="text-[10px] text-ink/60">1分で終わります。ぜひ感想を教えてください</div>
           </div>
         </div>
         <button
@@ -140,21 +138,21 @@ export default function PassportPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Tv2 className="w-4 h-4 text-chalk-yellow" />
-            <span className="text-xs font-bold text-white">黒板スクリーン連動</span>
+            <span className="text-xs font-bold text-white">教室のスクリーン連動</span>
           </div>
           <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-chalk-rose/30 text-chalk-rose border border-chalk-rose/50 font-bold">
-            LIVE STREAM
+            LIVE
           </span>
         </div>
         <p className="text-[11px] text-chalk-white/80 leading-relaxed">
-          完成した「箱庭パスポート」は教室の黒板スクリーンにも美しく舞い落ちて展示されます。
+          できあがったパスポートカードは、教室の大きなスクリーンにも届きます。
         </p>
         <Link
           href="/projector"
           target="_blank"
           className="inline-flex items-center gap-1 text-[11px] font-bold text-chalk-teal hover:underline"
         >
-          <span>黒板シアターを確認する</span>
+          <span>教室のスクリーンを見る</span>
           <ArrowRight className="w-3 h-3" />
         </Link>
       </div>

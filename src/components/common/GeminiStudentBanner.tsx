@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Sparkles, ExternalLink, GraduationCap } from 'lucide-react';
+import { ExternalLink, GraduationCap } from 'lucide-react';
 
 export const GeminiStudentBanner: React.FC = () => {
   return (
@@ -14,15 +14,15 @@ export const GeminiStudentBanner: React.FC = () => {
           <div className="flex items-center gap-1.5">
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">
               <GraduationCap className="w-3 h-3" />
-              学生・ICU生向け特典
+              学生のみなさんへ
             </span>
             <span className="text-[10px] text-blue-600 font-semibold">Gemini活用ガイド</span>
           </div>
           <h4 className="text-xs font-bold text-ink">
-            Google Gemini は学生向けに無料で使えます
+            Google Gemini は無料で使えます
           </h4>
           <p className="text-[11px] text-ink/70 leading-relaxed">
-            Googleアカウントがあれば、レポート作成・論文要約・プログラミング支援など、最高峰のAI機能をいつでも利用可能です。
+            Googleアカウントがあれば、レポートの調べものやアイデア出し、英語の翻訳など、毎日の勉強に役立つAIをいつでも無料で利用できます。
           </p>
         </div>
 
@@ -38,14 +38,14 @@ export const GeminiStudentBanner: React.FC = () => {
       </div>
 
       <div className="mt-2.5 pt-2 border-t border-blue-500/10 flex items-center justify-between text-[10px] text-ink/60">
-        <span>Google Workspace for Education / 大学アカウントでも対応</span>
+        <span>大学のアカウントでもそのまま使えます</span>
         <a
           href="https://one.google.com/explore-plan/gemini-advanced"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-700 hover:underline flex items-center gap-0.5"
         >
-          <span>Advancedプラン詳細</span>
+          <span>Advancedプランの詳細</span>
           <ExternalLink className="w-2.5 h-2.5" />
         </a>
       </div>

@@ -11,11 +11,8 @@ import {
   Gamepad2,
   Sparkles,
   ArrowRight,
-  CheckCircle2,
   Tv2,
-  Code2,
   Play,
-  RotateCcw,
 } from 'lucide-react';
 
 export default function MakeZonePage() {
@@ -57,18 +54,18 @@ export default function MakeZonePage() {
     label: string;
     detail: string;
   }> = [
-    { id: 'flying', name: '浮遊アクション', label: 'タップで上昇', detail: '障害物を潜り抜けるフロート' },
-    { id: 'fall_catch', name: 'キャッチ', label: '落下アイテム回収', detail: '左右移動でスコア稼ぎ' },
-    { id: 'endless_run', name: 'エンドレスラン', label: 'ジャンプ回避', detail: 'スピードが徐々に加速' },
-    { id: 'target_smash', name: '的当て', label: 'ターゲット連打', detail: '制限時間内に撃破' },
-    { id: 'balance_tower', name: 'タワー積み', label: 'バランス調整', detail: 'タイミングよく重ねる' },
+    { id: 'flying', name: '浮遊アクション', label: 'タップで浮く', detail: '障害物を避けて進む' },
+    { id: 'fall_catch', name: 'アイテムキャッチ', label: '落下アイテム回収', detail: '左右に動いてスコアを稼ぐ' },
+    { id: 'endless_run', name: 'ラン＆ジャンプ', label: '走ってジャンプ', detail: '障害物を跳び越える' },
+    { id: 'target_smash', name: '的当てタップ', label: '的をタップ', detail: '時間内にたくさん当てる' },
+    { id: 'balance_tower', name: 'タワー積み', label: 'バランス積み上げ', detail: 'タイミングよく重ねる' },
   ];
 
   const themes = [
-    { id: 'ICU Campus', label: 'ICUキャンパス（バカ山・本館）', bg: '#0c1b24' },
-    { id: 'Blue Rose Mystic', label: '青いバラの神秘庭園', bg: '#102331' },
-    { id: 'Cyber Neon', label: 'サイバーネオン2030', bg: '#0a0f1d' },
-    { id: 'Retro Pixel', label: 'レトロ8bit宇宙', bg: '#18122B' },
+    { id: 'ICU Campus', label: 'ICUキャンパス（緑の並木道）', bg: '#0c1b24' },
+    { id: 'Blue Rose Mystic', label: '青いバラの夜空庭園', bg: '#102331' },
+    { id: 'Cyber Neon', label: 'サイバーネオンの街', bg: '#0a0f1d' },
+    { id: 'Retro Pixel', label: 'レトロゲーム風の宇宙', bg: '#18122B' },
   ];
 
   const characters: Array<{
@@ -76,11 +73,11 @@ export default function MakeZonePage() {
     name: string;
     desc: string;
   }> = [
-    { id: 'rose', name: '青いバラ', desc: '象徴的モチーフ' },
-    { id: 'cat', name: 'サイバー猫', desc: '機敏な身のこなし' },
-    { id: 'robot', name: '小型AIロボ', desc: '愛らしい相棒' },
-    { id: 'star', name: '流星', desc: '神秘的な光の核' },
-    { id: 'bird', name: 'ICUの野鳥', desc: '大木を飛び交う' },
+    { id: 'rose', name: '青いバラ', desc: 'ふわふわ飛ぶバラ' },
+    { id: 'cat', name: 'サイバー猫', desc: 'すばしっこいネコ' },
+    { id: 'robot', name: '小型AIロボ', desc: '頼れる相棒ロボ' },
+    { id: 'star', name: '流星', desc: 'きらきら光る星' },
+    { id: 'bird', name: 'ICUの小鳥', desc: '森を飛び交うトリ' },
   ];
 
   const handleUpdate = (
@@ -99,24 +96,26 @@ export default function MakeZonePage() {
     setMake(updated);
   };
 
-  // Generate the Master Game-Creation Prompt
-  const gamePrompt = `あなたは熟練のHTML5 Canvasゲーム開発者およびCreative Technologistです。
-以下の仕様を満たす、完全自立型（外部ライブラリを一切使わず単一のHTMLファイルだけで完結する）のブラウザ向けミニゲームの全コードを出力してください。
+  // Plain & Effective Game-Creation Prompt
+  const gamePrompt = `あなたは親切で腕の良いゲームプログラマーです。
+以下の設定をもとに、スマホでもPCでもブラウザで開くだけですぐに遊べる楽しいWebミニゲームを作ってください。
+外部ライブラリは一切使わず、単一のHTMLファイル（HTML+CSS+JavaScript）だけで動くようにしてください。
 
-【ゲーム仕様】
-- ジャンル: ${engines.find((e) => e.id === selectedEngine)?.name} (${selectedEngine})
-- 世界観テーマ: ${selectedTheme}
-- 主人公キャラクター: ${characters.find((c) => c.id === charShape)?.name} (${charShape})
-- プラットフォーム: モバイル（スマートフォンのタッチ操作）およびPC（キーボード矢印キー）両対応
+【ゲームの設定】
+- ゲームの種類: ${engines.find((e) => e.id === selectedEngine)?.name}
+- ステージの雰囲気: ${themes.find((t) => t.id === selectedTheme)?.label || selectedTheme}
+- 主人公キャラクター: ${characters.find((c) => c.id === charShape)?.name}
+- 操作方法: スマホの画面タップ、またはキーボードの矢印キーで操作可能
 
-【必須機能と演出】
-1. HTML5 Canvas 2Dコンテキストのみを用い、流麗な60fpsゲームループ（requestAnimationFrame）を実装すること。
-2. スコア加算表示、ライフ/残機、ゲームオーバー画面、および「リトライ」ボタンを含めること。
-3. パーティクル演出（アイテム取得時やジャンプ時の光の粒子）を取り入れ、視覚的に心地よいジュース感（Game Juice）を出すこと。
-4. 単一の \`index.html\` として保存してブラウザで開けば、そのまま完全にプレイ可能であること。
+【入れてほしい機能】
+1. なめらかに動くゲーム画面（HTML5 Canvasを使用）
+2. スコア表示、残機（ライフ）、ゲームオーバー画面
+3. ゲームオーバー後に「もう一度あそぶ」ボタンを押すとすぐにやり直せる機能
+4. アイテムを取った時やジャンプした時に、星などの光の粒が出る楽しいエフェクト
+5. 誰でも直感的にルールが分かるシンプルなゲームバランス
 
-【出力形式】
-<!DOCTYPE html> から始まる、完全なHTMLコードのみを出力してください。`;
+【出力の形式】
+<!DOCTYPE html> から始まる、完全なHTMLコードのみを出力してください。余計な挨拶や解説は不要です。`;
 
   return (
     <main className="flex-1 flex flex-col p-4 space-y-4 pb-24 text-ink">
@@ -124,20 +123,20 @@ export default function MakeZonePage() {
       <section className="space-y-1">
         <div className="flex items-center justify-between">
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-rose-light text-rose-dark text-[10px] font-bold border border-rose/20">
-            ZONE 02 : GAME MAKER
+            ZONE 02 : ゲームづくり
           </span>
-          <span className="text-[10px] font-mono text-ink/50 uppercase">PROMPT-TO-PLAY</span>
+          <span className="text-[10px] text-ink/50">遊べるゲームをつくる</span>
         </div>
-        <h1 className="text-xl font-extrabold text-ink">言葉と絵のゲーム工房</h1>
+        <h1 className="text-xl font-extrabold text-ink">ゲームづくり工房</h1>
         <p className="text-xs text-ink/70 leading-relaxed">
-          好みのゲームルールとテーマを選ぶと、プロンプトが自動生成されます。外部AI（ClaudeやChatGPT）へ送ると、本物の自作ゲームがその場でプログラミングされます。
+          好きなゲームの種類やキャラクターを選ぶと、AIへの指示文（プロンプト）が作れます。ChatGPTやClaudeに送ると、ブラウザですぐに遊べる自作ゲームを作ってくれます。
         </p>
       </section>
 
       {/* 1. Engine / Genre Selector */}
       <div className="space-y-1.5">
         <label className="text-xs font-bold text-ink flex items-center justify-between">
-          <span>1. ゲームジャンルを選ぶ</span>
+          <span>1. ゲームの種類を選ぶ</span>
           <span className="text-[10px] text-teal-dark font-mono">
             {engines.find((e) => e.id === selectedEngine)?.name}
           </span>
@@ -193,7 +192,7 @@ export default function MakeZonePage() {
 
         {/* Theme */}
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-ink">3. 世界観テーマ</label>
+          <label className="text-xs font-bold text-ink">3. ステージの雰囲気</label>
           <div className="space-y-1">
             {themes.map((t) => (
               <button
@@ -220,9 +219,9 @@ export default function MakeZonePage() {
         <div className="flex items-center justify-between text-xs px-1">
           <span className="font-bold text-ink flex items-center gap-1.5">
             <Play className="w-3.5 h-3.5 text-rose fill-rose" />
-            アプリ内即時プレイプレビュー
+            お試しプレイ画面
           </span>
-          <span className="text-[10px] text-ink/50">タップで今すぐ操作可能</span>
+          <span className="text-[10px] text-ink/50">画面をタップして動かせます</span>
         </div>
         <div className="rounded-3xl bg-white border border-black/[0.06] shadow-sm p-3 flex flex-col items-center">
           <CanvasGameViewer config={activeConfig} />
@@ -231,15 +230,15 @@ export default function MakeZonePage() {
 
       {/* Prompt Launcher: Send to External LLMs */}
       <PromptLauncher
-        title="ゲーム制作プロンプト（Claude / ChatGPT向け）"
-        subtitle="このプロンプトをClaude（Artifacts機能）やChatGPTに送ると、完全自立型のWebゲームコードが生成されます。"
+        title="ゲームをつくる指示文（Claude / ChatGPT用）"
+        subtitle="この文章をClaudeやChatGPTに送ると、ブラウザですぐに遊べるゲームのプログラムを作ってくれます。"
         targetType="game"
         prompt={gamePrompt}
         anatomy={{
-          role: '熟練のHTML5 Canvasゲーム開発者（フルスタック・エンジニア）',
-          objective: '単一ファイル完結型（HTML/CSS/JS）のプレイ可能ゲームの自動生成',
-          constraints: '外部ライブラリ不使用、60fpsループ、タッチ/キーボード両対応、ゲームオーバー/リトライ実装',
-          outputFormat: '<!DOCTYPE html> から始まる単一HTMLコード',
+          role: '親切なWebゲームプログラマー',
+          objective: '単一のHTMLファイルですぐに遊べるゲームのコード作成',
+          constraints: '外部ライブラリ不使用、スマホとPC両対応、リトライボタン付き',
+          outputFormat: '<!DOCTYPE html> から始まるHTMLコード',
         }}
         userPreferences={{
           engine: selectedEngine,
@@ -253,9 +252,9 @@ export default function MakeZonePage() {
         <div className="flex items-center gap-2">
           <Tv2 className="w-4 h-4 text-chalk-yellow" />
           <div className="text-xs">
-            <span className="font-bold text-white block">教室の黒板スクリーンへ同時配信中</span>
+            <span className="font-bold text-white block">教室のスクリーンにも届きます</span>
             <span className="text-[10px] text-chalk-white/70">
-              設定したゲーム構成がプロジェクターの広場に届きます
+              あなたが選んだゲームの設定が大きな画面に表示されます
             </span>
           </div>
         </div>
@@ -266,7 +265,7 @@ export default function MakeZonePage() {
           }}
           className="px-3 py-1.5 rounded-xl bg-chalk-surface hover:bg-chalk-teal hover:text-chalk-bg text-chalk-teal border border-chalk-teal/40 text-xs font-bold transition-colors shrink-0"
         >
-          スクリーンへ送信
+          スクリーンに送る
         </button>
       </div>
 
@@ -275,7 +274,7 @@ export default function MakeZonePage() {
         onClick={() => router.push('/self')}
         className="w-full py-3.5 rounded-2xl bg-teal text-white text-xs font-bold hover:bg-teal-dark flex items-center justify-center gap-1.5 shadow-sm transition-all"
       >
-        <span>次は SELF（3Dアバター工房）へ進む</span>
+        <span>次は アバターづくり（SELF）へ進む</span>
         <ArrowRight className="w-4 h-4" />
       </button>
     </main>

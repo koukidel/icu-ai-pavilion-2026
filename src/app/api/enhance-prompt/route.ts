@@ -15,32 +15,31 @@ export async function POST(req: NextRequest) {
       '';
 
     if (!apiKey) {
-      // Fallback enhancement if API key not available
       return NextResponse.json({
-        enhancedPrompt: `${rawPrompt}\n\n[PROMPT ENHANCEMENT CONSTRAINTS]\n- Ensure photorealistic / high-fidelity output\n- Maintain clear, actionable step-by-step logic\n- Provide concrete examples and explanations`,
+        enhancedPrompt: `${rawPrompt}\n\n[ルール]\n- 具体的で分かりやすい例を入れてください\n- 誰でも理解できる平易な言葉で出力してください`,
       });
     }
 
     const ai = new GoogleGenAI({ apiKey });
 
     const systemInstruction = `
-あなたは世界最高峰のプロンプトエンジニア（Prompt Architect）です。
-ユーザーが指定した基本プロンプトを、ChatGPT、Gemini、Claudeなどの最新LLMが最も高いパフォーマンスとクリエイティビティを発揮できるように強化・研ぎ澄ましてください。
+あなたは親切で分かりやすいプロンプト（AIへの指示文）の作成アドバイザーです。
+ユーザーの基本プロンプトを、ChatGPTやGeminiなどのAIが最も意図通りに動くように、具体的で分かりやすい指示文にブラッシュアップしてください。
 
-【厳格な要件】
-1. 目的（TargetType: ${targetType || 'general'}）に特化した専門的な役割（Role）、明確な制約（Constraints）、魅力的な出力形式（Format）を付与すること。
-2. 絵文字は一切含めないこと。
-3. 日本語または英語（画像プロンプトの場合は英語主体）で、そのままLLMにコピペして最高の結果が得られる完成したプロンプト全文のみを出力すること。余計な前置きや「承知しました」などの挨拶は絶対に含めないこと。
+【ルール】
+1. 難解な専門用語、哲学的な言い回し、気取った言葉遣いは一切禁止です。
+2. 絵文字は一切含めないでください。
+3. そのままAIのチャット欄に貼り付けて送信できる、完成した指示文のみを出力してください。挨拶や前置きは不要です。
 `;
 
     const userMessage = `
 【元プロンプト】:
 ${rawPrompt}
 
-【ユーザー嗜好・補足】:
+【補足設定】:
 ${JSON.stringify(userPreferences || {})}
 
-上記を元に、最高品質のプロンプトを1つ出力してください。
+上記を元に、具体的でわかりやすい指示文を1つ出力してください。
 `;
 
     const response = await ai.models.generateContent({
@@ -56,7 +55,6 @@ ${JSON.stringify(userPreferences || {})}
     return NextResponse.json({ enhancedPrompt });
   } catch (error) {
     console.error('Enhance prompt error:', error);
-    // Graceful fallback
     return NextResponse.json({
       enhancedPrompt: body?.rawPrompt || '',
     });

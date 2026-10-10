@@ -7,25 +7,20 @@ import { CareResult, LovotProfile } from '@/types/pavilion';
 import { PromptLauncher } from '@/components/common/PromptLauncher';
 import confetti from 'canvas-confetti';
 import {
-  Heart,
   Camera,
   Upload,
   Sparkles,
   ArrowRight,
   Check,
-  CheckCircle2,
-  Share2,
-  Instagram,
   RotateCcw,
 } from 'lucide-react';
 
 export default function CareZonePage() {
   const router = useRouter();
-  const { work, self, make, care, setCare } = usePavilionSession();
+  const { work, self, care, setCare } = usePavilionSession();
 
   const [lovotPhotoUrl, setLovotPhotoUrl] = useState<string | null>(null);
   const [selectedScene, setSelectedScene] = useState<string>('icu_forest');
-  const [companionRole, setCompanionRole] = useState<string>('partner');
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const cameraInputRef = useRef<HTMLInputElement | null>(null);
@@ -46,10 +41,10 @@ export default function CareZonePage() {
   ];
 
   const scenes = [
-    { id: 'icu_forest', label: 'ICUの木漏れ日並木道', desc: '新緑と柔らかな自然光' },
-    { id: 'bakayama', label: 'ICUバカ山の芝生広場', desc: '青空とピクニック気分' },
-    { id: 'cyber_cafe', label: '未来のブックカフェ', desc: '知的な空間でリラックス' },
-    { id: 'starlit_night', label: '星降る夜のキャンパス', desc: 'ツノが優しく光る幻想的な夜' },
+    { id: 'icu_forest', label: 'ICUの木漏れ日並木道', desc: '緑豊かな大学のキャンパス' },
+    { id: 'bakayama', label: 'ICUバカ山の芝生広場', desc: '青空の下でのんびりピクニック' },
+    { id: 'cyber_cafe', label: '未来のブックカフェ', desc: '温かいカフェでおしゃべり' },
+    { id: 'starlit_night', label: '星降る夜のキャンパス', desc: '星空の下で寄り添う' },
   ];
 
   const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,31 +75,28 @@ export default function CareZonePage() {
     const careData: CareResult = {
       lovot: sampleProfile,
       interactionType: 'hug',
-      interactionLabel: 'ふれあいフォトセッション',
-      reflectionNote: `LOVOTとの共創写真: ${scenes.find((s) => s.id === selectedScene)?.label || 'キャンパス'}`,
+      interactionLabel: '記念写真',
+      reflectionNote: `LOVOTとの記念写真: ${scenes.find((s) => s.id === selectedScene)?.label || 'キャンパス'}`,
       timestamp: new Date().toISOString(),
     };
 
     setCare(careData);
   };
 
-  // User's accumulated context across earlier zones
   const futureTitle = work?.futureTitle || '未来の探究者';
-  const avatarMood = self?.userMood || '思索と温もり';
   const activeSceneObj = scenes.find((s) => s.id === selectedScene)!;
 
-  // Instagram / Social Media Shareable Photo Transformation Prompt
-  const lovotPrompt = `あなたは世界最高峰の商業フォトグラファーおよびプロンプトデザイナーです。
-添付した家庭用ロボット「LOVOT（らぼっと）」の写真をベースに、InstagramやSNSで大きな反響を呼ぶ、極めて愛らしくフォトジェニックな1枚を生成してください。
+  // Plain & Charming LOVOT Photo Prompt
+  const lovotPrompt = `あなたはプロのフォトグラファーです。
+添付した家庭用ロボット「LOVOT（らぼっと）」の写真をもとに、思わずSNSに載せたくなるような、最高にかわいい写真を生成してください。
 
-【撮影シチュエーション & 世界観】
-- ロケーション: ${activeSceneObj.label}（${activeSceneObj.desc}）
-- コンセプト: 私の2030年の共創肩書「${futureTitle}」に優しく寄り添う、かけがえのないパートナーロボット
-- 被写体演出: LOVOTの潤んだ大きな瞳、柔らかそうな温かいファブリック質感、頭頂部のセンサーホーンがほんのり温かく光る様子
-- 撮影スタイル: 高級一眼レフカメラ（85mm f/1.4レンズ）、被写体を際立たせる美しい背景ボケ（Bokeh）、ゴールデンアワーの温かな逆光、エモーショナルなシネマティックカラー
-- トーン: Instagram/SNS映えする高解像度、温もり、生命感、愛らしさ
+【写真の設定】
+- 場所: ${activeSceneObj.label}（${activeSceneObj.desc}）
+- 設定: 私（${futureTitle}）の頼れる可愛いパートナーロボット
+- 雰囲気: やわらかな自然光、あたたかみのある色合い、一眼レフで撮ったような背景のきれいなボケ感
+- LOVOTの表情: くりっとした潤んだ瞳、やわらかそうな身体、頭のツノ（センサーホーン）がほんのり温かく光る愛らしい姿
 
-添付したLOVOTの丸いフォルムと愛嬌を最大限に引き出した、心温まる奇跡の瞬間を出力してください。`;
+添付写真のLOVOTの丸いフォルムと愛嬌を活かして、心温まるすてきな1枚を出力してください。`;
 
   return (
     <main className="flex-1 flex flex-col p-4 space-y-4 pb-24 text-ink">
@@ -129,20 +121,20 @@ export default function CareZonePage() {
       <section className="space-y-1">
         <div className="flex items-center justify-between">
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-rose-light text-rose-dark text-[10px] font-bold border border-rose/20">
-            ZONE 04 : CARE & LOVOT
+            ZONE 04 : ロボットふれあい
           </span>
-          <span className="text-[10px] font-mono text-ink/50 uppercase">LOVOT STUDIO</span>
+          <span className="text-[10px] text-ink/50">LOVOT</span>
         </div>
-        <h1 className="text-xl font-extrabold text-ink">LOVOT写真工房</h1>
+        <h1 className="text-xl font-extrabold text-ink">LOVOT写真コーナー</h1>
         <p className="text-xs text-ink/70 leading-relaxed">
-          ブースにいるLOVOTを撮影（またはサンプルを選択）すると、他ゾーンで選んだあなたの肩書や世界観を組み込んだ**「SNS映えプロンプト」**が生成されます。
+          ブースにいるロボット（LOVOT）の写真を撮って、好きな背景を選ぶと、AIへの指示文が作れます。ChatGPTやGeminiに送ると、SNSに載せたくなる可愛い記念写真を作ってくれます。
         </p>
       </section>
 
       {/* 1. Take or Choose LOVOT Photo */}
       <div className="p-4 rounded-3xl bg-white border border-black/[0.06] shadow-xs space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold text-ink">1. ブースのLOVOTを撮影する</span>
+          <span className="text-xs font-bold text-ink">1. ロボット（LOVOT）を撮影する</span>
           {lovotPhotoUrl && (
             <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full flex items-center gap-1">
               <Check className="w-3 h-3" /> 撮影完了
@@ -161,7 +153,7 @@ export default function CareZonePage() {
               onClick={() => cameraInputRef.current?.click()}
               className="absolute bottom-2 right-2 px-2.5 py-1 rounded-xl bg-ink/70 backdrop-blur-md text-white text-[10px] font-bold flex items-center gap-1"
             >
-              <RotateCcw className="w-3 h-3" /> 再撮影
+              <RotateCcw className="w-3 h-3" /> 撮り直す
             </button>
           </div>
         ) : (
@@ -172,21 +164,21 @@ export default function CareZonePage() {
                 className="py-3 px-3 rounded-2xl bg-teal text-white text-xs font-bold hover:bg-teal-dark flex flex-col items-center justify-center gap-1 shadow-sm active:scale-98 transition-all"
               >
                 <Camera className="w-5 h-5" />
-                <span>ブースで撮影する</span>
+                <span>カメラで撮る</span>
               </button>
               <button
                 onClick={() => fileInputRef.current?.click()}
                 className="py-3 px-3 rounded-2xl bg-paper-light border border-teal/20 text-teal-dark text-xs font-bold hover:bg-teal-light flex flex-col items-center justify-center gap-1 shadow-xs active:scale-98 transition-all"
               >
                 <Upload className="w-5 h-5 text-teal" />
-                <span>ライブラリから選択</span>
+                <span>写真を選ぶ</span>
               </button>
             </div>
 
             {/* Sample selection */}
             <div className="pt-2 border-t border-black/[0.04] text-center">
               <span className="text-[10px] text-ink/60 block mb-1.5">
-                または サンプル写真で体験
+                または サンプル写真で試す
               </span>
               <div className="flex gap-2">
                 {sampleLovotPhotos.map((s) => (
@@ -215,10 +207,10 @@ export default function CareZonePage() {
         )}
       </div>
 
-      {/* 2. Scene / Situation Selection */}
+      {/* 2. Scene Selection */}
       <div className="space-y-1.5">
         <label className="text-xs font-bold text-ink flex items-center justify-between">
-          <span>2. 写真のシチュエーションを選ぶ</span>
+          <span>2. 写真の背景を選ぶ</span>
           <span className="text-[10px] text-teal-dark font-mono">
             {activeSceneObj.label}
           </span>
@@ -251,29 +243,28 @@ export default function CareZonePage() {
       <div className="p-3.5 rounded-2xl bg-paper-light border border-teal/20 space-y-1.5 text-xs">
         <div className="flex items-center gap-1.5 font-bold text-teal-dark text-[11px]">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>パビリオン体験データがプロンプトへ自動統合</span>
+          <span>これまでの診断結果もプロンプトに反映されます</span>
         </div>
         <p className="text-[11px] text-ink/75 leading-relaxed">
-          WORKゾーンで導出した2030年の肩書<strong>「{futureTitle}」</strong>が、LOVOTのパートナーシップ設定としてプロンプトに組み込まれます。
+          WORKコーナーで見つけたあなたの未来像<strong>「{futureTitle}」</strong>の頼れる相棒として、LOVOTが寄り添う設定になります。
         </p>
       </div>
 
-      {/* Prompt Launcher: Send to External LLMs */}
+      {/* Prompt Launcher */}
       <PromptLauncher
-        title="LOVOT SNS映え写真生成プロンプト"
-        subtitle="ChatGPTやGeminiに送信（LOVOTの写真を添付）して、最高に可愛い共創写真を創りましょう。"
+        title="かわいい写真をつくる指示文"
+        subtitle="ChatGPTやGeminiに送信（LOVOTの写真を添付）して、かわいい写真を作ってもらいましょう。"
         targetType="photo"
         prompt={lovotPrompt}
         anatomy={{
-          role: '商業フォトグラファー & シネマティック・ディレクター',
-          objective: 'LOVOT写真とICUキャンパス世界観を融合させたSNS向け高解像度写真の生成',
-          constraints: '一眼レフ被写界深度（ボケ味）、自然光シネマティックトーン、LOVOT特有の丸みと瞳の愛らしさを保持',
-          outputFormat: '高解像度画像（Instagram最適アスペクト比 1:1 または 4:5）',
+          role: 'プロのフォトグラファー',
+          objective: 'LOVOT写真とキャンパスの風景を合わせた素敵な写真の生成',
+          constraints: 'やわらかな自然光、あたたかい色合い、LOVOTの丸い可愛さを活かす',
+          outputFormat: '正方形または縦型の写真画像',
         }}
         userPreferences={{
           scene: selectedScene,
           futureTitle,
-          avatarMood,
         }}
       />
 
@@ -282,7 +273,7 @@ export default function CareZonePage() {
         onClick={() => router.push('/passport')}
         className="w-full py-3.5 rounded-2xl bg-teal text-white text-xs font-bold hover:bg-teal-dark flex items-center justify-center gap-1.5 shadow-sm transition-all"
       >
-        <span>すべての体験を統合「箱庭パスポート」へ進む</span>
+        <span>体験パスポートを見る</span>
         <ArrowRight className="w-4 h-4" />
       </button>
     </main>

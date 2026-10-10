@@ -142,14 +142,14 @@ export const HakoniwaDioramaCanvas: React.FC<Props> = ({ passport }) => {
 
     // Outfit aura based on WorkStyle
     const workStyle = work?.workStyle || 'balanced';
-    ctx.font = 'bold 12px -apple-system, sans-serif';
+    ctx.font = 'bold 12px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
     ctx.fillStyle = '#fff';
     ctx.fillText(
       workStyle === 'logical'
-        ? '【Techwear & Hologram】'
+        ? '【しっかり分析タイプ】'
         : workStyle === 'intuitive'
-        ? '【Warm Casual & Magic Brush】'
-        : '【Harmonic Hybrid Coat】',
+        ? '【ひらめき・直感タイプ】'
+        : '【バランス・調和タイプ】',
       0,
       54
     );
@@ -216,7 +216,7 @@ export const HakoniwaDioramaCanvas: React.FC<Props> = ({ passport }) => {
     ctx.fillStyle = '#168eac';
     ctx.font = 'bold 13px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
     ctx.textAlign = 'left';
-    ctx.fillText('AI CO-EXISTENCE PASSPORT 2026', 44, 515);
+    ctx.fillText('ICU AI PAVILION 2026 PASSPORT', 44, 515);
 
     ctx.fillStyle = '#dc4f89';
     ctx.font = 'bold 11px -apple-system, sans-serif';
@@ -231,35 +231,35 @@ export const HakoniwaDioramaCanvas: React.FC<Props> = ({ passport }) => {
     ctx.lineTo(w - 44, 528);
     ctx.stroke();
 
-    // Field 1: 【WORK】2030年の共創型肩書
+    // Field 1: 【WORK】将来のしごと
     ctx.fillStyle = '#27566c';
     ctx.font = 'bold 11px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
     ctx.textAlign = 'left';
-    ctx.fillText('【WORK】2030年の共創肩書', 44, 560);
+    ctx.fillText('【WORK】未来のしごと', 44, 560);
 
     ctx.fillStyle = '#08718d';
     ctx.font = 'bold 18px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
-    ctx.fillText(work?.futureTitle || '概念翻訳アーキテクト', 44, 588);
+    ctx.fillText(work?.futureTitle || 'アイデアをつなぐ企画パートナー', 44, 588);
 
-    // Field 2: 【MAKE】制作したゲーム
+    // Field 2: 【MAKE】つくったゲーム
     ctx.fillStyle = '#27566c';
     ctx.font = 'bold 11px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
-    ctx.fillText('【MAKE】自作ミニゲーム', 44, 638);
+    ctx.fillText('【MAKE】つくったゲーム', 44, 638);
 
     ctx.fillStyle = '#dc4f89';
     ctx.font = 'bold 16px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
     ctx.fillText(`『${make?.title || '青いバラの空中散歩'}』`, 44, 664);
 
-    // Field 3: 【SELF】未来への宣言 (Blue Rose Statement)
+    // Field 3: 【SELF】わたしのモットー
     ctx.fillStyle = '#27566c';
     ctx.font = 'bold 11px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
-    ctx.fillText('【SELF】未来への宣言（Blue Rose Statement）', 44, 718);
+    ctx.fillText('【SELF】わたしのモットー', 44, 718);
 
     ctx.fillStyle = '#27566c';
     ctx.font = 'italic bold 12px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
     const stmt =
       self?.blueRoseStatement ||
-      '不可能な青を、私自身の純粋な探究でこのキャンパスに咲かせる。';
+      'AIを頼れる相棒にして、自分らしく前へ進んでいく。';
     if (stmt.length > 22) {
       ctx.fillText(`「${stmt.slice(0, 22)}`, 44, 742);
       ctx.fillText(`${stmt.slice(22)}」`, 54, 760);
@@ -267,17 +267,17 @@ export const HakoniwaDioramaCanvas: React.FC<Props> = ({ passport }) => {
       ctx.fillText(`「${stmt}」`, 44, 742);
     }
 
-    // Field 4: 【CARE】共創パートナー
+    // Field 4: 【CARE】いっしょに過ごしたロボット
     ctx.fillStyle = '#27566c';
     ctx.font = 'bold 11px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
-    ctx.fillText('【CARE】共創パートナー', 44, 796);
+    ctx.fillText('【CARE】いっしょに過ごしたロボット', 44, 796);
 
     ctx.fillStyle = '#059669';
     ctx.font = 'bold 13px -apple-system, "Hiragino Kaku Gothic ProN", sans-serif';
     ctx.fillText(
       care
-        ? `LOVOT（らぼっと）『${care.lovot.name}』- ${care.interactionLabel}`
-        : 'LOVOT写真工房（未体験）',
+        ? `LOVOT（らぼっと）『${care.lovot.name}』`
+        : 'LOVOT写真コーナー（未体験）',
       44,
       820
     );

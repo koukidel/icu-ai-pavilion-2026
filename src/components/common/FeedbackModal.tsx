@@ -31,7 +31,6 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
 
     try {
       localStorage.setItem('icu_ai_pavilion_feedback', JSON.stringify(feedbackData));
-      // Optionally broadcast to classroom events
       fetch('/api/classroom/events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -81,10 +80,10 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
               <Check className="w-6 h-6" />
             </div>
             <h3 className="text-base font-bold text-ink">
-              ご感想ありがとうございます！
+              ご協力ありがとうございました！
             </h3>
             <p className="text-xs text-ink/70">
-              いただいた声は学祭パビリオンの改善に活用させていただきます。
+              いただいた感想は今後の企画の参考にさせていただきます。
             </p>
           </div>
         ) : (
@@ -94,7 +93,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                 1分アンケート
               </span>
               <h2 className="text-base font-extrabold text-ink mt-1">
-                パビリオンの体験はいかがでしたか？
+                パビリオンはいかがでしたか？
               </h2>
               <p className="text-xs text-ink/70 mt-0.5">
                 簡単なご感想をお聞かせください。
@@ -104,7 +103,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
             {/* Star Rating */}
             <div className="space-y-1">
               <label className="text-[11px] font-bold text-ink/70">
-                総合満足度
+                全体の感想
               </label>
               <div className="flex items-center gap-2">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -125,12 +124,12 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                 ))}
                 <span className="text-xs font-bold ml-2 text-ink/80">
                   {rating === 5
-                    ? '大満足'
+                    ? 'とても楽しかった'
                     : rating === 4
-                    ? '満足'
+                    ? '楽しかった'
                     : rating === 3
                     ? '普通'
-                    : '要改善'}
+                    : 'いまいち'}
                 </span>
               </div>
             </div>
@@ -138,12 +137,12 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
             {/* Favorite Zone */}
             <div className="space-y-1">
               <label className="text-[11px] font-bold text-ink/70">
-                最も印象的だったゾーン
+                一番楽しかったコーナー
               </label>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 {[
-                  { id: 'work', label: 'WORK（思考・キャリア）' },
-                  { id: 'make', label: 'MAKE（ゲーム開発）' },
+                  { id: 'work', label: 'WORK（将来の仕事）' },
+                  { id: 'make', label: 'MAKE（ゲームづくり）' },
                   { id: 'self', label: 'SELF（3Dアバター）' },
                   { id: 'care', label: 'CARE（LOVOT写真）' },
                 ].map((zone) => (
@@ -166,12 +165,12 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
             {/* Comment */}
             <div className="space-y-1">
               <label className="text-[11px] font-bold text-ink/70">
-                一言感想・改善点（任意）
+                感想や気になったところ（自由記入）
               </label>
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="プロンプトの解説が面白かった、もっとこうしてほしい等"
+                placeholder="楽しかったこと、もっとこうしてほしい点など"
                 rows={2}
                 className="w-full text-xs p-2.5 rounded-xl border border-teal/20 bg-white text-ink placeholder:text-ink/40 focus:outline-none focus:ring-1 focus:ring-teal"
               />
@@ -183,7 +182,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
               className="w-full py-2.5 px-4 rounded-xl bg-teal text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md hover:bg-teal-dark active:scale-[0.98] transition-all"
             >
               <Send className="w-3.5 h-3.5" />
-              アンケートを送信する
+              送信する
             </button>
           </form>
         )}

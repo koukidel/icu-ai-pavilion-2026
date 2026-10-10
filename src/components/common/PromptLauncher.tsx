@@ -9,7 +9,6 @@ import {
   Info,
   ChevronDown,
   ChevronUp,
-  Share2,
 } from 'lucide-react';
 
 interface PromptLauncherProps {
@@ -60,7 +59,7 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
     try {
       await navigator.clipboard.writeText(currentPrompt);
       setCopied(true);
-      showToast('プロンプトをクリップボードにコピーしました');
+      showToast('指示文をコピーしました');
       setTimeout(() => setCopied(false), 2500);
     } catch {
       // fallback
@@ -71,7 +70,7 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
       document.execCommand('copy');
       document.body.removeChild(textArea);
       setCopied(true);
-      showToast('プロンプトをコピーしました');
+      showToast('指示文をコピーしました');
       setTimeout(() => setCopied(false), 2500);
     }
   };
@@ -83,7 +82,6 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
   };
 
   const handleLaunchGemini = async () => {
-    // Copy prompt first, then navigate to Gemini
     try {
       await navigator.clipboard.writeText(currentPrompt);
     } catch {
@@ -94,7 +92,6 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
   };
 
   const handleLaunchClaude = async () => {
-    // Copy prompt first, then navigate to Claude
     try {
       await navigator.clipboard.writeText(currentPrompt);
     } catch {
@@ -122,7 +119,7 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
         if (data.enhancedPrompt) {
           setCurrentPrompt(data.enhancedPrompt);
           if (onPromptChange) onPromptChange(data.enhancedPrompt);
-          showToast('Gemini 2.5 Flash によりプロンプトをさらに研ぎ澄ましました');
+          showToast('指示文をより詳しく整えました');
         }
       }
     } catch (err) {
@@ -134,7 +131,7 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
 
   return (
     <div
-      className={`rounded-2xl border border-teal/20 bg-paper-light p-4 space-y-4 shadow-sm text-ink ${className}`}
+      className={`rounded-2xl border border-teal/20 bg-paper-light p-4 space-y-3.5 shadow-sm text-ink ${className}`}
     >
       {/* Toast Notification */}
       {toastMessage && (
@@ -156,7 +153,7 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
       <div className="flex items-start justify-between">
         <div>
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-teal-light text-teal-dark text-[10px] font-bold border border-teal/20">
-            PROMPT LAUNCHPAD
+            AIへの指示文（プロンプト）
           </span>
           <h3 className="text-sm font-bold text-ink mt-1">{title}</h3>
           {subtitle && <p className="text-xs text-ink/70 mt-0.5">{subtitle}</p>}
@@ -169,7 +166,7 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
           className="flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-teal/30 bg-white text-teal-dark hover:bg-teal-light transition-colors disabled:opacity-50 shadow-xs"
         >
           <Sparkles className={`w-3.5 h-3.5 ${isEnhancing ? 'animate-spin text-teal' : 'text-teal-dark'}`} />
-          {isEnhancing ? '研ぎ澄まし中...' : 'プロンプト高度化'}
+          {isEnhancing ? '調整中...' : '詳しくする'}
         </button>
       </div>
 
@@ -180,7 +177,7 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
 
       {/* Quick Copy & Word Count */}
       <div className="flex items-center justify-between text-[11px] text-ink/60">
-        <span>{currentPrompt.length} 文字（高解像度プロンプト構成）</span>
+        <span>{currentPrompt.length} 文字</span>
         <button
           onClick={handleCopy}
           className="flex items-center gap-1 font-bold text-teal-dark hover:text-teal transition-colors"
@@ -193,7 +190,7 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
           ) : (
             <>
               <Copy className="w-3.5 h-3.5" />
-              <span>プロンプトをコピー</span>
+              <span>文章をコピー</span>
             </>
           )}
         </button>
@@ -201,8 +198,8 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
 
       {/* 1-Click Launchers into Consumer LLMs */}
       <div className="space-y-2 pt-1">
-        <div className="text-[10px] font-bold tracking-wider text-ink/50 uppercase">
-          1タップで外部AIへ送る（実行開始）
+        <div className="text-[10px] font-bold tracking-wider text-ink/50">
+          ワンタップでAIを開く
         </div>
         <div className="grid grid-cols-3 gap-2">
           {/* ChatGPT Button */}
@@ -214,7 +211,7 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
               GPT
             </div>
             <span className="text-[11px] font-bold">ChatGPT</span>
-            <span className="text-[9px] text-emerald-700/80 mt-0.5">自動入力で開く</span>
+            <span className="text-[9px] text-emerald-700/80 mt-0.5">すぐ実行</span>
           </button>
 
           {/* Gemini Button */}
@@ -252,7 +249,7 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
           >
             <span className="flex items-center gap-1.5">
               <Info className="w-3.5 h-3.5 text-teal" />
-              プロンプト技術のツボ（なぜ効くのか？）
+              指示文の書き方のコツ
             </span>
             {isAnatomyOpen ? (
               <ChevronUp className="w-3.5 h-3.5" />
@@ -265,25 +262,25 @@ export const PromptLauncher: React.FC<PromptLauncherProps> = ({
             <div className="mt-2 space-y-2 p-3 rounded-xl bg-white/70 border border-teal/10 text-[10px] leading-relaxed">
               {anatomy.role && (
                 <div>
-                  <span className="font-bold text-teal-dark block">役割定義 (Persona/Role)</span>
+                  <span className="font-bold text-teal-dark block">AIの役割（どんな立場で答えてもらうか）</span>
                   <span className="text-ink/80">{anatomy.role}</span>
                 </div>
               )}
               {anatomy.objective && (
                 <div>
-                  <span className="font-bold text-teal-dark block">具体的目的 (Task & Context)</span>
+                  <span className="font-bold text-teal-dark block">やってほしいこと</span>
                   <span className="text-ink/80">{anatomy.objective}</span>
                 </div>
               )}
               {anatomy.constraints && (
                 <div>
-                  <span className="font-bold text-teal-dark block">制約条件 (Constraints)</span>
+                  <span className="font-bold text-teal-dark block">守ってほしいルール</span>
                   <span className="text-ink/80">{anatomy.constraints}</span>
                 </div>
               )}
               {anatomy.outputFormat && (
                 <div>
-                  <span className="font-bold text-teal-dark block">出力形式 (Output Format)</span>
+                  <span className="font-bold text-teal-dark block">答え方の形式</span>
                   <span className="text-ink/80">{anatomy.outputFormat}</span>
                 </div>
               )}

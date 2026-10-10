@@ -22,13 +22,13 @@ export const NavigationHeader: React.FC = () => {
 
   const isHome = pathname === '/';
 
-  // Zone metadata for studio header
+  // Zone metadata for header
   const getZoneMeta = () => {
-    if (pathname.startsWith('/work')) return { title: 'WORK スタジオ', badge: '01', zone: 'work' };
-    if (pathname.startsWith('/make')) return { title: 'MAKE スタジオ', badge: '02', zone: 'make' };
-    if (pathname.startsWith('/self')) return { title: 'SELF スタジオ', badge: '03', zone: 'self' };
-    if (pathname.startsWith('/care')) return { title: 'CARE スタジオ', badge: '04', zone: 'care' };
-    if (pathname.startsWith('/passport')) return { title: '箱庭パスポート', badge: 'FINAL', zone: null };
+    if (pathname.startsWith('/work')) return { title: 'WORK（将来の仕事）', badge: '01', zone: 'work' };
+    if (pathname.startsWith('/make')) return { title: 'MAKE（ゲームづくり）', badge: '02', zone: 'make' };
+    if (pathname.startsWith('/self')) return { title: 'SELF（3Dアバター）', badge: '03', zone: 'self' };
+    if (pathname.startsWith('/care')) return { title: 'CARE（LOVOT写真）', badge: '04', zone: 'care' };
+    if (pathname.startsWith('/passport')) return { title: '体験パスポート', badge: 'FINAL', zone: null };
     return null;
   };
 
