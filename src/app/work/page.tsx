@@ -20,6 +20,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { PromptLauncher } from '@/components/common/PromptLauncher';
+import { GeminiStudentBanner } from '@/components/common/GeminiStudentBanner';
 
 export default function CareerMirrorPage() {
   const router = useRouter();
@@ -676,6 +677,9 @@ export default function CareerMirrorPage() {
               synergyRatio: blueprint.synergyRatio,
             }}
           />
+
+          {/* Student specific campaign link */}
+          {mode === 'student' && <GeminiStudentBanner compact={true} />}
 
           {/* Navigation buttons */}
           <div className="flex gap-2 pt-1">
