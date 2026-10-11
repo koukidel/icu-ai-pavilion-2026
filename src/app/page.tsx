@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { usePavilionSession } from '@/context/SessionContext';
 import { GeminiStudentBanner } from '@/components/common/GeminiStudentBanner';
 import { FeedbackModal } from '@/components/common/FeedbackModal';
+import { PrivacyOnboardingModal } from '@/components/common/PrivacyOnboardingModal';
 import {
   Briefcase,
   Gamepad2,
@@ -17,6 +18,7 @@ import {
   Tv2,
   RotateCcw,
   MessageSquare,
+  ShieldCheck,
 } from 'lucide-react';
 
 export default function MobileHubPage() {
@@ -25,6 +27,7 @@ export default function MobileHubPage() {
     usePavilionSession();
 
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
 
   const zones = [
     {
@@ -232,19 +235,29 @@ export default function MobileHubPage() {
         </button>
       </div>
 
-      {/* Reset footer */}
-      <footer className="pt-2 text-center">
-        <button
-          onClick={() => {
-            if (confirm('体験データをすべてリセットしますか？')) {
-              resetSession();
-            }
-          }}
-          className="text-[11px] text-ink/50 hover:text-rose transition-colors inline-flex items-center gap-1"
-        >
-          <RotateCcw className="w-3 h-3" />
-          データを消して最初からやり直す
-        </button>
+      {/* Footer */}
+      <footer className="pt-2 text-center space-y-1.5 pb-4">
+        <div className="flex items-center justify-center gap-3 text-[11px] text-ink/50">
+          <button
+            onClick={() => setIsPrivacyOpen(true)}
+            className="hover:text-teal-dark transition-colors inline-flex items-center gap-1"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-teal" />
+            <span>個人情報の取り扱い</span>
+          </button>
+          <span>•</span>
+          <button
+            onClick={() => {
+              if (confirm('体験データをすべてリセットしますか？')) {
+                resetSession();
+              }
+            }}
+            className="hover:text-rose transition-colors inline-flex items-center gap-1"
+          >
+            <RotateCcw className="w-3 h-3" />
+            <span>データをリセット</span>
+          </button>
+        </div>
       </footer>
 
       {/* Floating Bottom Dock: Hakoniwa Passport */}
@@ -283,6 +296,12 @@ export default function MobileHubPage() {
       <FeedbackModal
         isOpen={isFeedbackOpen}
         onClose={() => setIsFeedbackOpen(false)}
+      />
+
+      {/* Privacy Onboarding Modal */}
+      <PrivacyOnboardingModal
+        forceOpen={isPrivacyOpen}
+        onClose={() => setIsPrivacyOpen(false)}
       />
     </main>
   );
